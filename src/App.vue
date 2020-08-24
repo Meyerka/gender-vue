@@ -37,6 +37,7 @@
 import Tinder from '@/components/vue-tinder/Tinder.vue'
 import words from '@/data/nouns'
 import source from '@/data/bing'
+import axios from 'axios'
 
 export default {
   name: 'App',
@@ -58,11 +59,27 @@ export default {
     randomWord() {
       const arraySize = this.words.nouns.length
       const randomIndex = Math.floor(Math.random() * arraySize)
-
+      const translatedResult = this.getTranslation(
+        this.words.nouns[randomIndex]
+      )
       return {
         word: this.words.nouns[randomIndex],
+        translation: translatedResult.text,
+        gender: translatedResult.gen,
       }
     },
+    async getTranslation(word) {
+      let result = {}
+      const language = 'en-fr'
+      console.log(word)
+      const apiKey = process.env.VUE_APP_YANDEX_KEY
+      let url = `https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${apiKey}&lang=${language}&text=${word}`
+      axios
+        .get(url)
+        .then((response) => Object.assign(result, response.data.def[0].tr[0]))
+      console.log(result)
+    },
+
     mock(count = 5, append = true) {
       const list = []
       const wordList = []
