@@ -3,7 +3,7 @@ export const initStatus = revert => ({
   touchId: null,
   start: {},
   move: {},
-  startPoint: 1, // 手指落在卡片的上半部分（1），下半部分（-1）
+  startPoint: 1,
   result: null
 })
 

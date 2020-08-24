@@ -16,7 +16,7 @@
           :style="{
             'background-image': `url(https://cn.bing.com//th?id=OHR.${scope.data.id}_UHD.jpg&pid=hp&w=720&h=1280&rs=1&c=4&r=0)`
           }"
-        >{{randomWord().word}}</div>
+        >{{scope.data.word}}</div>
       </template>
       <img class="female-pointer" slot="female" src="~img/female.png" />
       <img class="male-pointer" slot="male" src="~img/male.png" />
@@ -36,7 +36,7 @@
 <script>
 import Tinder from '@/components/vue-tinder/Tinder.vue'
 import words from '@/data/nouns'
-import source from '@/bing'
+import source from '@/data/bing'
 
 export default {
   name: 'App',
@@ -67,8 +67,10 @@ export default {
       const list = []
       const wordList = []
       for (let i = 0; i < count; i++) {
-        list.push({ id: source[this.offset] })
-        wordList.push({ id: this.randomWord().word })
+        list.push({
+          id: source[this.offset],
+          word: this.randomWord().word,
+        })
         this.offset++
       }
       if (append) {
@@ -97,14 +99,6 @@ export default {
           this.$refs.tinder.rewind(
             this.history.splice(-Math.ceil(Math.random() * 3))
           )
-          // 非 api调用的添加
-          // this.queue.unshift(this.history.pop())
-          // this.queue.push(this.history.pop())
-          // 非头部添加
-          // this.queue.splice(1, 0, this.history.pop())
-          // 一次性 rewind 多个，并且含有非头部添加的 item
-          // this.queue.unshift(this.history.pop())
-          // this.queue.unshift(...this.history)
         }
       } else if (choice === 'help') {
         //

@@ -56,7 +56,6 @@
             <slot name="super" :opacity="superOpacity" />
           </span>
         </template>
-        <!-- rewind 指示器显示不需要是第一张卡片，会由内部判断显示 -->
         <span v-if="state.status === 4" slot="rewind" class="pointer-wrap rewind-pointer-wrap">
           <slot name="rewind" />
         </span>
@@ -82,7 +81,6 @@ export default {
     TinderCard,
   },
   props: {
-    // TODO: 考虑添加一个不强制渲染的配置
     allowSuper: {
       type: Boolean,
       default: true,
@@ -99,28 +97,18 @@ export default {
       type: String,
       default: 'key',
     },
-    /**
-     * 横向移动直至消失时，移动距离占卡片 "一半宽度" 的比例
-     * 因为是占卡片一半宽度的比例，所以默认 0.5 便相当于 1/4（0.5*0.5）卡片宽度
-     */
     pointerThreshold: {
       type: Number,
       default: 0.5,
     },
-    /**
-     * 向上移动直至消失时，移动距离占卡片高度的比例
-     * 默认移动 1/2 高度便符合移出条件
-     */
     superThreshold: {
       type: Number,
       default: 0.5,
     },
-    // 执行下次操作是否需要等卡片完全消失，默认非同步操作
     sync: {
       type: Boolean,
       default: false,
     },
-    // 最大渲染数
     max: {
       type: Number,
       default: 3,
@@ -145,15 +133,15 @@ export default {
       width: 0,
       height: 0,
     },
-    state: initStatus(), // 此次触摸及移动坐标等状态
-    list: [], // 实际使用的列表，用以与新列表比较，对新列表 item 做唯一处理，避免 dom 被重用
+    state: initStatus(),
+    list: [],
+    wordList: [],
     tinderMounted: false,
   }),
   computed: {
     status() {
       return this.state.status
     },
-    // 在 x 轴上移动距离相对于卡片一半宽度的比例
     ratio() {
       if (this.size.width) {
         const { start, move } = this.state
@@ -163,7 +151,6 @@ export default {
       }
       return 0
     },
-    // 卡片上喜欢/不喜欢图标的不透明度
     pointerOpacity() {
       return this.ratio / this.pointerThreshold
     },
@@ -177,7 +164,6 @@ export default {
       return ratio > pointerOpacity ? ratio : 0
     },
     femaleOpacity() {
-      // 如果当前卡片正在往上滑，需要隐藏喜欢/不喜欢
       if (this.superOpacity) {
         return 0
       }
@@ -198,7 +184,7 @@ export default {
   mounted() {
     if (!this.$el.offsetWidth || !this.$el.offsetHeight) {
       /* eslint-disable-next-line */
-      console.error('请设置vue-tinder的宽高')
+      console.error('vue-tinder - 10001')
       return
     }
     this.size = {
@@ -217,7 +203,6 @@ export default {
     window.removeEventListener('onresize', this.getSize)
   },
   methods: {
-    // 获取组件尺寸及位置，用以决定旋转角度、显示对应状态等
     getSize() {
       clearInterval(resizeTimer)
       resizeTimer = setTimeout(() => {
@@ -228,7 +213,6 @@ export default {
         }
       }, 300)
     },
-    // 当前卡片已经离开
     resetStatus() {
       this.state = initStatus()
     },
@@ -242,7 +226,6 @@ export default {
   -webkit-tap-highlight-color: transparent;
 }
 
-/* style正在被数据绑定，只能使用important来覆盖 */
 .v-move {
   transition: none !important;
 }
@@ -252,7 +235,6 @@ export default {
   transition: opacity 0.2s ease;
 }
 
-/* 通过调用函数让卡片消失时需要直接显示对应状态，不需要过渡动画 */
 .tinder-card.male .male-pointer-wrap,
 .tinder-card.female .female-pointer-wrap,
 .tinder-card.super .super-pointer-wrap {
