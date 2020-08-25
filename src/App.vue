@@ -16,7 +16,7 @@
           :style="{
             'background-image': `url(https://cn.bing.com//th?id=OHR.${scope.data.id}_UHD.jpg&pid=hp&w=720&h=1280&rs=1&c=4&r=0)`
           }"
-        >{{scope.data.word}}</div>
+        >{{scope.data.word.noun}}</div>
       </template>
       <img class="female-pointer" slot="female" src="~img/female.png" />
       <img class="male-pointer" slot="male" src="~img/male.png" />
@@ -25,9 +25,9 @@
     </Tinder>
     <div class="btns">
       <img src="~img/rewind.png" @click="decide('rewind')" />
-      <img src="~img/male.png" @click="decide('male')" />
+      <img src="~img/male.png" @click="decide('m')" />
       <img src="~img/super-like.png" @click="decide('super')" />
-      <img src="~img/female.png" @click="decide('female')" />
+      <img src="~img/female.png" @click="decide('f')" />
       <img src="~img/help.png" @click="decide('help')" />
     </div>
   </div>
@@ -35,67 +35,52 @@
 
 <script>
 import Tinder from '@/components/vue-tinder/Tinder.vue'
-import words from '@/data/nouns'
 import source from '@/data/bing'
 import axios from 'axios'
+import mots from '@/data/noms'
 
 export default {
   name: 'App',
   components: { Tinder },
   data: () => ({
     queue: [],
-    wordQueue: [],
     offset: 0,
     history: [],
-    words,
+    mots,
     score: 0,
     tries: 0,
   }),
   created() {
     this.mock()
   },
-  computed: {},
+  computed: {
+    currentWord() {
+      return this.queue[0].word
+    },
+  },
   methods: {
     randomWord() {
-      const arraySize = this.words.nouns.length
+      const arraySize = this.mots.length
       const randomIndex = Math.floor(Math.random() * arraySize)
-      const translatedResult = this.getTranslation(
-        this.words.nouns[randomIndex]
-      )
       return {
-        word: this.words.nouns[randomIndex],
-        translation: translatedResult.text,
-        gender: translatedResult.gen,
+        noun: this.mots[randomIndex].nom,
+        gender: this.mots[randomIndex].genre,
       }
-    },
-    async getTranslation(word) {
-      let result = {}
-      const language = 'en-fr'
-      console.log(word)
-      const apiKey = process.env.VUE_APP_YANDEX_KEY
-      let url = `https://dictionary.yandex.net/api/v1/dicservice.json/lookup?key=${apiKey}&lang=${language}&text=${word}`
-      axios
-        .get(url)
-        .then((response) => Object.assign(result, response.data.def[0].tr[0]))
-      console.log(result)
     },
 
     mock(count = 5, append = true) {
       const list = []
-      const wordList = []
       for (let i = 0; i < count; i++) {
         list.push({
           id: source[this.offset],
-          word: this.randomWord().word,
+          word: this.randomWord(),
         })
         this.offset++
       }
       if (append) {
         this.queue = this.queue.concat(list)
-        this.wordQueue = this.wordQueue.concat(wordList)
       } else {
         this.queue.unshift(...list)
-        this.wordQueue.unshift(...wordList)
       }
     },
     onSubmit({ item }) {
@@ -104,9 +89,9 @@ export default {
       }
       this.history.push(item)
     },
-    async decide(choice) {
+    decide(choice) {
       this.tries++
-      if (choice == 'male') {
+      if (choice == this.currentWord.gender) {
         this.score++
         console.log('score is now ' + this.score)
       }
