@@ -5,7 +5,6 @@
       ref="tinder"
       key-name="id"
       :queue.sync="queue"
-      :wordQueue.sync="wordQueue"
       :max="3"
       :offset-y="10"
       @submit="onSubmit"
@@ -36,7 +35,6 @@
 <script>
 import Tinder from '@/components/vue-tinder/Tinder.vue'
 import source from '@/data/bing'
-import axios from 'axios'
 import mots from '@/data/noms'
 
 export default {
@@ -83,19 +81,17 @@ export default {
         this.queue.unshift(...list)
       }
     },
-    onSubmit({ item }) {
+    onSubmit({ type, item }) {
+      this.tries++
+      if (type == item.word.gender) {
+        this.score++
+      }
       if (this.queue.length < 3) {
         this.mock()
       }
       this.history.push(item)
     },
     decide(choice) {
-      this.tries++
-      if (choice == this.currentWord.gender) {
-        this.score++
-        console.log('score is now ' + this.score)
-      }
-
       if (choice === 'rewind') {
         if (this.history.length) {
           this.$refs.tinder.rewind(

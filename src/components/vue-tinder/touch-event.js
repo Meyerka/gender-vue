@@ -100,8 +100,8 @@ export default {
           this.superOpacity >= 1
             ? 'super'
             : this.pointerOpacity > 0
-            ? 'like'
-            : 'nope'
+              ? 'f'
+              : 'm'
         this.shiftCard(result)
       } else if (this.status === STATUS.MOVING) {
         // 操作取消，回归原位，回归原位后 status 会通过 TinderCard 通知 Tinder 将 status 重置为 0
