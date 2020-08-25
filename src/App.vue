@@ -15,7 +15,9 @@
           :style="{
             'background-image': `url(https://cn.bing.com//th?id=OHR.${scope.data.id}_UHD.jpg&pid=hp&w=720&h=1280&rs=1&c=4&r=0)`
           }"
-        >{{scope.data.word.noun}}</div>
+        >
+          <span class="word">{{scope.data.word.noun}}</span>
+        </div>
       </template>
       <img class="female-pointer" slot="female" src="~img/female.png" />
       <img class="male-pointer" slot="male" src="~img/male.png" />
@@ -175,8 +177,8 @@ body {
   background-position: center;
   font-size: 60px;
   text-align: center;
-  color: aliceblue;
   margin: 0 auto;
+  vertical-align: middle;
 }
 
 .btns {
@@ -216,6 +218,19 @@ body {
 .score {
   font-size: 80px;
   color: aquamarine;
+}
+
+.word {
+  color: #fff;
+  text-transform: uppercase;
+  background: rgba(40, 77, 59, 0.45);
+  font-size: 60px;
+  width: 20%;
+  text-align: center;
+  vertical-align: middle;
+  display: table-cell;
+  margin-top: 400px;
+  padding: 400px 0 400px 0;
 }
 
 /* .vue-tinder.right-end,
