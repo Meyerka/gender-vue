@@ -94,9 +94,7 @@ export default {
     decide(choice) {
       if (choice === 'rewind') {
         if (this.history.length) {
-          this.$refs.tinder.rewind(
-            this.history.splice(-Math.ceil(Math.random() * 3))
-          )
+          this.$refs.tinder.rewind(this.history.splice(-1))
         }
       } else if (choice === 'help') {
         //
