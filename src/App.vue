@@ -11,7 +11,7 @@
     >
       <template slot-scope="scope">
         <span class="word-bg" :style="{
-            'background': scope.data.word.color         }">
+            'background': scope.data.word.color}">
           <span class="word">{{scope.data.word.noun}}</span>
         </span>
       </template>
@@ -191,17 +191,6 @@ body {
   height: 78px;
 }
 
-.pic {
-  width: 100%;
-  height: 100%;
-  background-size: cover;
-  background-position: center;
-  font-size: 60px;
-  text-align: center;
-  margin: 0 auto;
-  vertical-align: middle;
-}
-
 .btns {
   position: absolute;
   left: 0;
@@ -242,7 +231,7 @@ body {
 }
 
 .word-bg {
-  color: #fff;
+  color: rgba(0, 0, 0, 1);
   text-transform: uppercase;
   font-size: 60px;
   width: 20%;
@@ -254,6 +243,8 @@ body {
 }
 
 .word {
-  background-color: black;
+  background-color: rgba(255, 255, 255, 0.6);
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 500;
 }
 </style>
