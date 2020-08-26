@@ -15,17 +15,17 @@
           <span class="word">{{scope.data.word.noun}}</span>
         </span>
       </template>
-      <img class="female-pointer" slot="female" src="~img/female.png" />
-      <img class="male-pointer" slot="male" src="~img/male.png" />
+      <img class="female-pointer" slot="female" src="~img/female3.png" />
+      <img class="male-pointer" slot="male" src="~img/male3.png" />
       <img class="super-pointer" slot="super" src="~img/super-txt.png" />
       <img class="rewind-pointer" slot="rewind" src="~img/rewind-txt.png" />
     </Tinder>
     <div class="btns">
       <img src="~img/rewind.png" @click="decide('rewind')" />
-      <img src="~img/male.png" @click="decide('m')" />
+      <img src="~img/male2.png" @click="decide('m')" />
       <img src="~img/super-like.png" @click="decide('super')" />
-      <img src="~img/female.png" @click="decide('f')" />
-      <img src="~img/help.png" @click="decide('help')" />
+      <img src="~img/female2.png" @click="decide('f')" />
+      <img src="~img/githubLogo.png" @click="decide('help')" />
     </div>
   </div>
 </template>
@@ -99,7 +99,7 @@ export default {
           this.$refs.tinder.rewind(this.history.splice(-1))
         }
       } else if (choice === 'help') {
-        //
+        window.open('https://github.com/meyerka', '_blank')
       } else {
         this.$refs.tinder.decide(choice)
       }
