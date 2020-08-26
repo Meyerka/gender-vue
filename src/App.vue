@@ -10,14 +10,10 @@
       @submit="onSubmit"
     >
       <template slot-scope="scope">
-        <div
-          class="pic"
-          :style="{
-            'background-image': `url(https://cn.bing.com//th?id=OHR.${scope.data.id}_UHD.jpg&pid=hp&w=720&h=1280&rs=1&c=4&r=0)`
-          }"
-        >
+        <span class="word-bg" :style="{
+            'background': scope.data.word.color         }">
           <span class="word">{{scope.data.word.noun}}</span>
-        </div>
+        </span>
       </template>
       <img class="female-pointer" slot="female" src="~img/female.png" />
       <img class="male-pointer" slot="male" src="~img/male.png" />
@@ -57,6 +53,9 @@ export default {
     currentWord() {
       return this.queue[0].word
     },
+    pickedColor() {
+      return this.randomColor()
+    },
   },
   methods: {
     randomWord() {
@@ -65,6 +64,7 @@ export default {
       return {
         noun: this.mots[randomIndex].nom,
         gender: this.mots[randomIndex].genre,
+        color: this.randomColor(),
       }
     },
 
@@ -103,6 +103,27 @@ export default {
       } else {
         this.$refs.tinder.decide(choice)
       }
+    },
+    randomColor() {
+      const palette = [
+        '#ACECD5',
+        '#FFF9AA',
+        '#FFD5B8',
+        '#FFB9B3',
+        '#799FCB',
+        '#95B4CC',
+        '#EEF1E6',
+        '#FEC9C9',
+        '#F9665E',
+        '#8F8CBC',
+        '#F69EAF',
+        '#EBD78B',
+        '#EDE6CA',
+        '#A3D292',
+        '#7EBE91',
+      ]
+      const randomIndex = Math.floor(Math.random() * palette.length)
+      return palette[randomIndex]
     },
   },
 }
@@ -220,10 +241,9 @@ body {
   color: aquamarine;
 }
 
-.word {
+.word-bg {
   color: #fff;
   text-transform: uppercase;
-  background: rgba(40, 77, 59, 0.45);
   font-size: 60px;
   width: 20%;
   text-align: center;
@@ -233,24 +253,7 @@ body {
   padding: 400px 0 400px 0;
 }
 
-/* .vue-tinder.right-end,
-.vue-tinder.left-end {
-  transform: translateZ(20px);
+.word {
+  background-color: black;
 }
-.vue-tinder.right-end .tinder-card:nth-child(1) {
-  animation: rightEnd 0.2s ease-in-out;
-}
-.vue-tinder.left-end .tinder-card:nth-child(1) {
-  animation: leftEnd 0.2s ease-in-out;
-}
-@keyframes leftEnd {
-  50% {
-    transform: rotateY(8deg);
-  }
-}
-@keyframes rightEnd {
-  50% {
-    transform: rotateY(-8deg);
-  }
-} */
 </style>
