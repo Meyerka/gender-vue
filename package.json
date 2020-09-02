@@ -9,12 +9,9 @@
   },
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "rollup -c rollup.config.js",
+    "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "release": "bash release.sh",
-    "docs:dev": "vuepress dev docs",
-    "docs:build": "vuepress build docs",
-    "docs:deploy": "bash deploy_docs.sh"
+    "release": "cmd release.sh"
   },
   "keywords": [
     "tinder",
