@@ -1,11 +1,11 @@
 {
-  "name": "vue-tinder",
-  "version": "2.0.0",
-  "description": "Imitate Tinder by Vue.js",
+  "name": "gender-tinder",
+  "version": "1.0.0",
+  "description": "Vue.js tinder clone for learning french vocabulary and genders",
   "main": "lib/vue-tinder.js",
   "author": {
-    "name": "JohnnyDan",
-    "email": "shanlh841271734@live.com"
+    "name": "meyerka",
+    "email": "karlerik.meyer@gmail.com"
   },
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -18,14 +18,16 @@
   },
   "keywords": [
     "tinder",
-    "tantan",
-    "vue"
+    "learn",
+    "vue",
+    "french",
+    "grammar"
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/shanlh/vue-tinder.git"
+    "url": "git+https://github.com/Meyerka/gender-vue.git"
   },
-  "homepage": "https://github.com/shanlh/vue-tinder",
+  "homepage": "https://github.com/Meyerka/gender-vue",
   "license": "MIT",
   "dependencies": {
     "axios": "^0.20.0",
