@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <transition :name="answer" mode="out-in">
-      <div :key="tries">
-        <div class="score">
+    <div>
+      <transition :name="answer" mode="out-in">
+        <div class="score" :key="tries">
           <transition name="right" mode="out-in">
             <span :key="score">{{score}}</span>
           </transition>
@@ -10,34 +10,35 @@
             <span :key="tries-score">/{{tries}}</span>
           </transition>
         </div>
-        <Tinder
-          ref="tinder"
-          key-name="id"
-          :queue.sync="queue"
-          :max="3"
-          :offset-y="10"
-          @submit="onSubmit"
-        >
-          <template slot-scope="scope">
-            <span class="word-bg" :style="{
+      </transition>
+      <Tinder
+        ref="tinder"
+        key-name="id"
+        :queue.sync="queue"
+        :max="3"
+        :offset-y="10"
+        @submit="onSubmit"
+      >
+        <template slot-scope="scope">
+          <span class="word-bg" :style="{
             'background': scope.data.word.color}">
-              <span class="word">{{scope.data.word.noun}}</span>
-            </span>
-          </template>
-          <img class="female-pointer" slot="female" src="~img/female3.png" />
-          <img class="male-pointer" slot="male" src="~img/male3.png" />
-          <img class="super-pointer" slot="super" src="~img/super-txt.png" />
-          <img class="rewind-pointer" slot="rewind" src="~img/rewind-txt.png" />
-        </Tinder>
-        <div class="btns">
-          <img src="~img/rewind.png" @click="decide('rewind')" />
-          <img src="~img/male2.png" @click="decide('m')" />
-          <img src="~img/linkedinLogo.png" @click="decide('super')" />
-          <img src="~img/female2.png" @click="decide('f')" />
-          <img src="~img/githubLogo.png" @click="decide('help')" />
-        </div>
+            <span class="word">{{scope.data.word.noun}}</span>
+          </span>
+        </template>
+        <img class="female-pointer" slot="female" src="~img/female3.png" />
+        <img class="male-pointer" slot="male" src="~img/male3.png" />
+        <img class="super-pointer" slot="super" src="~img/super-txt.png" />
+        <img class="rewind-pointer" slot="rewind" src="~img/rewind-txt.png" />
+      </Tinder>
+      <div class="btns">
+        <img src="~img/rewind.png" @click="decide('rewind')" />
+        <img src="~img/male2.png" @click="decide('m')" />
+        <img src="~img/linkedinLogo.png" @click="decide('super')" />
+        <img src="~img/female2.png" @click="decide('f')" />
+        <img src="~img/githubLogo.png" @click="decide('help')" />
       </div>
-    </transition>
+    </div>
+    <!-- </transition> -->
   </div>
 </template>
 
@@ -296,25 +297,23 @@ body {
   color: red;
 }
 
-.blinking {
-  animation: blinkingText 0.8s 1;
+.right-answer-enter-active,
+.right-answer-leave-active {
+  transition: opacity 0.8s;
+}
+.right-answer-enter,
+.right-answer-leave-to {
+  opacity: 0;
+  background: rgb(47, 87, 47);
 }
 
-@keyframes blinkingText {
-  0% {
-    color: #000;
-  }
-  49% {
-    color: transparent;
-  }
-  50% {
-    color: transparent;
-  }
-  99% {
-    color: transparent;
-  }
-  100% {
-    color: #000;
-  }
+.wrong-answer-enter-active,
+.wrong-answer-leave-active {
+  transition: opacity 0.8s;
+}
+.wrong-answer-enter,
+.wrong-answer-leave-to {
+  opacity: 0;
+  background: rgb(221, 119, 119);
 }
 </style>
