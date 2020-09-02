@@ -1,32 +1,43 @@
 <template>
   <div id="app">
-    <div class="score">{{score}}/{{tries}}</div>
-    <Tinder
-      ref="tinder"
-      key-name="id"
-      :queue.sync="queue"
-      :max="3"
-      :offset-y="10"
-      @submit="onSubmit"
-    >
-      <template slot-scope="scope">
-        <span class="word-bg" :style="{
+    <transition :name="answer" mode="out-in">
+      <div :key="tries">
+        <div class="score">
+          <transition name="right" mode="out-in">
+            <span :key="score">{{score}}</span>
+          </transition>
+          <transition name="wrong" mode="out-in">
+            <span :key="tries-score">/{{tries}}</span>
+          </transition>
+        </div>
+        <Tinder
+          ref="tinder"
+          key-name="id"
+          :queue.sync="queue"
+          :max="3"
+          :offset-y="10"
+          @submit="onSubmit"
+        >
+          <template slot-scope="scope">
+            <span class="word-bg" :style="{
             'background': scope.data.word.color}">
-          <span class="word">{{scope.data.word.noun}}</span>
-        </span>
-      </template>
-      <img class="female-pointer" slot="female" src="~img/female3.png" />
-      <img class="male-pointer" slot="male" src="~img/male3.png" />
-      <img class="super-pointer" slot="super" src="~img/super-txt.png" />
-      <img class="rewind-pointer" slot="rewind" src="~img/rewind-txt.png" />
-    </Tinder>
-    <div class="btns">
-      <img src="~img/rewind.png" @click="decide('rewind')" />
-      <img src="~img/male2.png" @click="decide('m')" />
-      <img src="~img/super-like.png" @click="decide('super')" />
-      <img src="~img/female2.png" @click="decide('f')" />
-      <img src="~img/githubLogo.png" @click="decide('help')" />
-    </div>
+              <span class="word">{{scope.data.word.noun}}</span>
+            </span>
+          </template>
+          <img class="female-pointer" slot="female" src="~img/female3.png" />
+          <img class="male-pointer" slot="male" src="~img/male3.png" />
+          <img class="super-pointer" slot="super" src="~img/super-txt.png" />
+          <img class="rewind-pointer" slot="rewind" src="~img/rewind-txt.png" />
+        </Tinder>
+        <div class="btns">
+          <img src="~img/rewind.png" @click="decide('rewind')" />
+          <img src="~img/male2.png" @click="decide('m')" />
+          <img src="~img/linkedinLogo.png" @click="decide('super')" />
+          <img src="~img/female2.png" @click="decide('f')" />
+          <img src="~img/githubLogo.png" @click="decide('help')" />
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -45,6 +56,8 @@ export default {
     mots,
     score: 0,
     tries: 0,
+    showScore: false,
+    answer: '',
   }),
   created() {
     this.mock()
@@ -86,7 +99,10 @@ export default {
     onSubmit({ type, item }) {
       this.tries++
       if (type == item.word.gender) {
+        this.answer = 'right-answer'
         this.score++
+      } else {
+        this.answer = 'wrong-answer'
       }
       if (this.queue.length < 3) {
         this.mock()
@@ -100,8 +116,15 @@ export default {
         }
       } else if (choice === 'help') {
         window.open('https://github.com/meyerka', '_blank')
+      } else if (choice === 'super') {
+        window.open(
+          'https://www.linkedin.com/in/karl-erik-meyer-72b79887/',
+          '_blank'
+        )
       } else {
         this.$refs.tinder.decide(choice)
+        this.showScore = false
+        this.showScore = true
       }
     },
     randomColor() {
@@ -133,6 +156,7 @@ export default {
 html,
 body {
   height: 100%;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 body {
@@ -152,6 +176,10 @@ body {
   height: calc(100% - 23px - 65px - 47px - 16px);
   min-width: 300px;
   max-width: 355px;
+}
+
+.general-bg {
+  background: green;
 }
 
 .male-pointer,
@@ -228,6 +256,8 @@ body {
 .score {
   font-size: 80px;
   color: aquamarine;
+  z-index: 2000;
+  position: relative;
 }
 
 .word-bg {
@@ -244,7 +274,47 @@ body {
 
 .word {
   background-color: rgba(255, 255, 255, 0.6);
-  font-family: 'Courier New', Courier, monospace;
   font-weight: 500;
+}
+
+.right-enter-active,
+.right-leave-active {
+  transition: opacity 0.5s;
+}
+.right-enter,
+.right-leave-to {
+  opacity: 0;
+}
+
+.wrong-enter-active,
+.wrong-leave-active {
+  transition: opacity 0.5s;
+}
+.wrong-enter,
+.wrong-leave-to {
+  opacity: 0;
+  color: red;
+}
+
+.blinking {
+  animation: blinkingText 0.8s 1;
+}
+
+@keyframes blinkingText {
+  0% {
+    color: #000;
+  }
+  49% {
+    color: transparent;
+  }
+  50% {
+    color: transparent;
+  }
+  99% {
+    color: transparent;
+  }
+  100% {
+    color: #000;
+  }
 }
 </style>

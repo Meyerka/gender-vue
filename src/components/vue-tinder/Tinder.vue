@@ -83,7 +83,7 @@ export default {
   props: {
     allowSuper: {
       type: Boolean,
-      default: true,
+      default: false,
     },
     queue: {
       type: Array,
