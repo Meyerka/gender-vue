@@ -5,7 +5,7 @@ function resolve(dir) {
 }
 
 module.exports = {
-  publicPath: process.env.NODE_ENV === 'production' ? '/gender-vue' : '/',
+  publicPath: '/gender-vue/',//process.env.NODE_ENV === 'production' ? '/gender-vue' : '/',
 
   configureWebpack: {
     resolve: {
