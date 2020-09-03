@@ -27,7 +27,6 @@
         </template>
         <img class="female-pointer" slot="female" src="~img/female3.png" />
         <img class="male-pointer" slot="male" src="~img/male3.png" />
-        <img class="super-pointer" slot="super" src="~img/super-txt.png" />
         <img class="rewind-pointer" slot="rewind" src="~img/rewind-txt.png" />
       </Tinder>
       <div class="btns">
@@ -38,7 +37,6 @@
         <img src="~img/githubLogo.png" @click="decide('help')" />
       </div>
     </div>
-    <!-- </transition> -->
   </div>
 </template>
 
