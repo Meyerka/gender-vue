@@ -30,11 +30,11 @@
         <img class="rewind-pointer" slot="rewind" src="~img/rewind-txt.png" />
       </Tinder>
       <div class="btns">
-        <img src="~img/rewind.png" @click="decide('rewind')" />
+        <img src="~img/rewind4.png" @click="decide('rewind')" />
         <img src="~img/male2.png" @click="decide('m')" />
-        <img src="~img/linkedinLogo.png" @click="decide('super')" />
+        <img src="~img/linkedinLogo3.png" @click="decide('super')" />
         <img src="~img/female2.png" @click="decide('f')" />
-        <img src="~img/githubLogo.png" @click="decide('help')" />
+        <img src="~img/githubLogo4.png" @click="decide('help')" />
       </div>
     </div>
   </div>
