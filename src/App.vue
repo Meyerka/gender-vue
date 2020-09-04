@@ -4,10 +4,10 @@
       <transition :name="answer" mode="out-in">
         <div class="score" :key="tries">
           <transition name="right" mode="out-in">
-            <span :key="score">{{score}}</span>
+            <span class="score-component" :key="score">{{score}}</span>
           </transition>
           <transition name="wrong" mode="out-in">
-            <span :key="tries-score">/{{tries}}</span>
+            <span class="score-component" :key="tries-score">/{{tries}}</span>
           </transition>
         </div>
       </transition>
@@ -257,6 +257,11 @@ body {
   color: aquamarine;
   z-index: 2000;
   position: relative;
+  text-align: right;
+}
+
+.score-component {
+  border-bottom: 5px solid aquamarine;
 }
 
 .word-bg {
@@ -297,7 +302,7 @@ body {
 
 .right-answer-enter-active,
 .right-answer-leave-active {
-  transition: opacity 0.8s;
+  transition: opacity 1s;
 }
 .right-answer-enter,
 .right-answer-leave-to {
@@ -307,7 +312,7 @@ body {
 
 .wrong-answer-enter-active,
 .wrong-answer-leave-active {
-  transition: opacity 0.8s;
+  transition: opacity 1s;
 }
 .wrong-answer-enter,
 .wrong-answer-leave-to {
