@@ -169,10 +169,10 @@ body {
   z-index: 1;
   left: 0;
   right: 0;
-  top: 23px;
+  top: 80px;
   margin: auto;
   width: calc(100% - 20px);
-  height: calc(100% - 23px - 65px - 47px - 16px);
+  height: calc(100% - 84px - 65px - 47px - 16px);
   min-width: 300px;
   max-width: 355px;
 }
@@ -258,10 +258,6 @@ body {
   z-index: 2000;
   position: relative;
   text-align: right;
-}
-
-.score-component {
-  border-bottom: 5px solid aquamarine;
 }
 
 .word-bg {
